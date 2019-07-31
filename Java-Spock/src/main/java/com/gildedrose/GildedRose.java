@@ -1,18 +1,22 @@
 package com.gildedrose;
 
-import java.util.Arrays;
+import static java.util.Arrays.*;
+
 import java.util.List;
 
 class GildedRose {
 
-    private final List<DailyItemUpdateStrategy> updateStrategies = Arrays.asList(
-            new AgedBrieDailyUpdateStrategy(),
-            new BackstagePassesDailyUpdateStrategy(),
-            new SulfurusDailyUpdateStrategy(),
-            new DefaultDailyUpdateStrategy()
-    );
+    private static final List<DailyItemUpdateStrategy> updateStrategies;
 
     Item[] items;
+
+    static {
+        updateStrategies = asList(
+                new AgedBrieDailyUpdateStrategy(),
+                new BackstagePassesDailyUpdateStrategy(),
+                new SulfurusDailyUpdateStrategy(),
+                new DefaultDailyUpdateStrategy());
+    }
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -31,5 +35,4 @@ class GildedRose {
         item.quality = item.quality + strategy.getQualityDelta(item);
         item.sellIn = item.sellIn + strategy.getSellInDelta();
     }
-
 }
