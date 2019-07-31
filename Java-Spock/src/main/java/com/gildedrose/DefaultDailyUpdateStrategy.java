@@ -1,9 +1,9 @@
 package com.gildedrose;
 
-public class DefaultQualityUpdateStrategy implements QualityUpdateStrategy {
+public class DefaultDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
-    public int getDelta(Item item) {
+    public int getQualityDelta(Item item) {
         if (item.quality <= 0) {
             return 0;
         }

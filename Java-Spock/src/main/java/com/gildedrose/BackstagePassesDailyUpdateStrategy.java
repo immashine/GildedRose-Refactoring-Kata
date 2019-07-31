@@ -1,9 +1,9 @@
 package com.gildedrose;
 
-public class BackstagePassesQualityUpdateStrategy implements QualityUpdateStrategy {
+public class BackstagePassesDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
-    public int getDelta(Item item) {
+    public int getQualityDelta(Item item) {
         if (item.quality >= 50){
             return 0;
         }

@@ -5,13 +5,12 @@ import java.util.List;
 
 class GildedRose {
 
-    private final List<QualityUpdateStrategy> qualityUpdateStrategies = Arrays.asList(
-            new AgedBrieQualityUpdateStrategy(),
-            new BackstagePassesQualityUpdateStrategy(),
-            new DefaultQualityUpdateStrategy()
+    private final List<DailyItemUpdateStrategy> updateStrategies = Arrays.asList(
+            new AgedBrieDailyUpdateStrategy(),
+            new BackstagePassesDailyUpdateStrategy(),
+            new SulfurusDailyUpdateStrategy(),
+            new DefaultDailyUpdateStrategy()
     );
-
-    final static String SULFURAS = "Sulfuras, Hand of Ragnaros";
 
     Item[] items;
 
@@ -21,23 +20,16 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (isNotUpdatable(item)) {
-                continue;
-            }
-            qualityUpdateStrategies.stream()
+            updateStrategies.stream()
                     .filter(strategy -> strategy.isApplicable(item))
                     .findFirst()
-                    .ifPresent(strategy -> update(item, strategy.getDelta(item)));
+                    .ifPresent(strategy -> update(item, strategy));
         }
     }
 
-    private boolean isNotUpdatable(Item item) {
-        return item.name.equals(SULFURAS);
-    }
-
-    private void update(Item item, int delta) {
-        item.quality = item.quality + delta;
-        item.sellIn = item.sellIn - 1;
+    private void update(Item item, DailyItemUpdateStrategy strategy) {
+        item.quality = item.quality + strategy.getQualityDelta(item);
+        item.sellIn = item.sellIn + strategy.getSellInDelta();
     }
 
 }
