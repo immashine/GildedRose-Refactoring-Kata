@@ -21,19 +21,23 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
+            if (isNotUpdatable(item)) {
+                continue;
+            }
             qualityUpdateStrategies.stream()
                     .filter(strategy -> strategy.isApplicable(item))
                     .findFirst()
-                    .ifPresent(strategy -> update(item, strategy));
+                    .ifPresent(strategy -> update(item, strategy.getDelta(item)));
         }
     }
 
-    private void update(Item item, QualityUpdateStrategy strategy) {
-        int delta = strategy.getDelta(item);
+    private boolean isNotUpdatable(Item item) {
+        return item.name.equals(SULFURAS);
+    }
+
+    private void update(Item item, int delta) {
         item.quality = item.quality + delta;
-        if (!item.name.equals(SULFURAS)) {
-            item.sellIn = item.sellIn - 1;
-        }
+        item.sellIn = item.sellIn - 1;
     }
 
 }

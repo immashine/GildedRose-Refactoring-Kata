@@ -14,6 +14,6 @@ public class DefaultQualityUpdateStrategy implements QualityUpdateStrategy {
 
     @Override
     public boolean isApplicable(Item item) {
-        return !"Sulfuras, Hand of Ragnaros".equals(item.name);
+        return true;
     }
 }
