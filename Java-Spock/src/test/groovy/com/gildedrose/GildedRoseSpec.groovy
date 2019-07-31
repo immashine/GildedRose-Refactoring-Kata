@@ -91,4 +91,48 @@ class GildedRoseSpec extends Specification {
         then: 'sellIn did not change'
             app.items[0].sellIn == 59
     }
+
+    def 'should increase quality by 1 for Backstage passes'() {
+        given: 'Backstage passes with more than 10 sellIn'
+            Item[] items = [new Item('Backstage passes to a TAFKAL80ETC concert', 25, 7)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality increased by 1'
+            app.items[0].quality == 8
+    }
+
+    def 'should increase quality by 2 if sellIn is lower than 11 for Backstage passes'() {
+        given: 'Backstage passes with lower than 11 sellIn'
+            Item[] items = [new Item('Backstage passes to a TAFKAL80ETC concert', 9, 29)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality decreased by 2'
+            app.items[0].quality == 31
+    }
+
+    def 'should increase quality by 3 if sellIn is lower than 6 for Backstage passes'() {
+        given: 'Backstage passes with lower than 6 sellIn'
+            Item[] items = [new Item('Backstage passes to a TAFKAL80ETC concert', 5, 31)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality decreased by 3'
+            app.items[0].quality == 34
+    }
+
+    def 'should drop quality to 0 if sellIn below 0 for  Backstage passes'() {
+        given: 'Backstage passes with lower than 0 sellIn'
+            Item[] items = [new Item('Backstage passes to a TAFKAL80ETC concert', 0, 31)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality decreased to 0'
+            app.items[0].quality == 0
+    }
 }
