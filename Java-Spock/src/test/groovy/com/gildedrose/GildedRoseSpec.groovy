@@ -135,4 +135,15 @@ class GildedRoseSpec extends Specification {
         then: 'quality decreased to 0'
             app.items[0].quality == 0
     }
+
+    def 'should decrease quality by 2 for conjured item'() {
+        given: 'Conjured item'
+            Item[] items = [new Item('Conjured', 32, 32)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality decreased by 2'
+            app.items[0].quality == 30
+    }
 }

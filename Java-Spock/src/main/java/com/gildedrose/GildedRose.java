@@ -15,6 +15,7 @@ class GildedRose {
                 new AgedBrieDailyUpdateStrategy(),
                 new BackstagePassesDailyUpdateStrategy(),
                 new SulfurusDailyUpdateStrategy(),
+                new ConjuredDailyUpdateStrategy(),
                 new DefaultDailyUpdateStrategy());
     }
 
