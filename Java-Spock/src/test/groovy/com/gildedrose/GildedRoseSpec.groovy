@@ -69,4 +69,26 @@ class GildedRoseSpec extends Specification {
         then: 'the quality is correct'
             app.items[0].quality == 50
     }
+
+    def 'should not change quality for Sulfuras'() {
+        given: 'common item'
+            Item[] items = [new Item('Sulfuras, Hand of Ragnaros', 20, 10)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'the quality is correct'
+            app.items[0].quality == 10
+    }
+
+    def 'should not change sellIn for Sulfuras'() {
+        given: 'common item'
+            Item[] items = [new Item('Sulfuras, Hand of Ragnaros', 59, 44)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'the quality is correct'
+            app.items[0].sellIn == 59
+    }
 }
