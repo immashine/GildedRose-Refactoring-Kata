@@ -47,4 +47,26 @@ class GildedRoseSpec extends Specification {
         then: 'the quality is correct'
             app.items[0].sellIn == 10
     }
+
+    def 'should increase quality by 1 for Aged Brie'() {
+        given: 'common item'
+            Item[] items = [new Item('Aged Brie', 78, 13)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'the quality is correct'
+            app.items[0].quality == 24
+    }
+
+    def 'should not increase quality above 50'() {
+        given: 'common item'
+            Item[] items = [new Item('Aged Brie', 25, 50)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'the quality is correct'
+            app.items[0].quality == 50
+    }
 }
