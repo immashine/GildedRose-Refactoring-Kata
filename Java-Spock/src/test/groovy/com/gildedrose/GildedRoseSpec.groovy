@@ -126,7 +126,7 @@ class GildedRoseSpec extends Specification {
     }
 
     def 'should drop quality to 0 if sellIn below 0 for  Backstage passes'() {
-        given: 'Backstage passes with lower than 0 sellIn'
+        given: 'Backstage passes with 0 sellIn'
             Item[] items = [new Item('Backstage passes to a TAFKAL80ETC concert', 0, 31)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
