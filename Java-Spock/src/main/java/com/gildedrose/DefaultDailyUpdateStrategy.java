@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class DefaultDailyUpdateStrategy implements DailyItemUpdateStrategy {
+class DefaultDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
     public int getQualityDelta(Item item) {

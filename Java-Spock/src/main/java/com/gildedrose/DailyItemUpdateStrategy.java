@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public interface DailyItemUpdateStrategy {
+interface DailyItemUpdateStrategy {
 
     boolean isApplicable(Item item);
 

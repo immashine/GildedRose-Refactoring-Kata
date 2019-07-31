@@ -1,6 +1,6 @@
 package com.gildedrose;
 
-public class BackstagePassesDailyUpdateStrategy implements DailyItemUpdateStrategy {
+class BackstagePassesDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
     public int getQualityDelta(Item item) {
