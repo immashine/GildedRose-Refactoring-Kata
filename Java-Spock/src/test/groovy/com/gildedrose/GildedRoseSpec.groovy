@@ -11,7 +11,7 @@ class GildedRoseSpec extends Specification {
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'quality increased by 1'
+        then: 'quality decreased by 1'
             app.items[0].quality == 32
     }
 
@@ -22,7 +22,7 @@ class GildedRoseSpec extends Specification {
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'quality increased by 2'
+        then: 'quality decreased by 2'
             app.items[0].quality == 26
     }
 
@@ -44,51 +44,51 @@ class GildedRoseSpec extends Specification {
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'the quality is correct'
+        then: 'sellIn was lowered by 1'
             app.items[0].sellIn == 10
     }
 
     def 'should increase quality by 1 for Aged Brie'() {
-        given: 'common item'
+        given: 'Aged Brie'
             Item[] items = [new Item('Aged Brie', 78, 13)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'the quality is correct'
-            app.items[0].quality == 24
+        then: 'quality increased by 1'
+            app.items[0].quality == 14
     }
 
     def 'should not increase quality above 50'() {
-        given: 'common item'
+        given: 'Aged Brie with maximum allowed quality'
             Item[] items = [new Item('Aged Brie', 25, 50)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'the quality is correct'
+        then: 'quality did not change'
             app.items[0].quality == 50
     }
 
     def 'should not change quality for Sulfuras'() {
-        given: 'common item'
+        given: 'Sulfuras'
             Item[] items = [new Item('Sulfuras, Hand of Ragnaros', 20, 10)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'the quality is correct'
+        then: 'quality did not change'
             app.items[0].quality == 10
     }
 
     def 'should not change sellIn for Sulfuras'() {
-        given: 'common item'
+        given: 'Sulfuras'
             Item[] items = [new Item('Sulfuras, Hand of Ragnaros', 59, 44)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
-        then: 'the quality is correct'
+        then: 'sellIn did not change'
             app.items[0].sellIn == 59
     }
 }
