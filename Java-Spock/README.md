@@ -1,0 +1,1 @@
+I noticed some discrepancies  between requirements and original code. For faster development i decided to chose original code as source of truth.
