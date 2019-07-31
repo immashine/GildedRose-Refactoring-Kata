@@ -2,13 +2,15 @@ package com.gildedrose;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 class GildedRose {
 
     private final List<QualityUpdateStrategy> qualityUpdateStrategies = Arrays.asList(
-            new AgedBrieQualityUpdateStrategy(), new BackstagePassesQualityUpdateStrategy());
-    
+            new AgedBrieQualityUpdateStrategy(),
+            new BackstagePassesQualityUpdateStrategy(),
+            new DefaultQualityUpdateStrategy()
+    );
+
     final static String SULFURAS = "Sulfuras, Hand of Ragnaros";
 
     Item[] items;
@@ -19,35 +21,19 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            Optional<QualityUpdateStrategy> strat = qualityUpdateStrategies.stream()
+            qualityUpdateStrategies.stream()
                     .filter(strategy -> strategy.isApplicable(item))
-                    .findFirst();
-            if (strat.isPresent()) {
-                int delta = strat.get().getDelta(item);
-                item.quality = item.quality + delta;
-                item.sellIn = item.sellIn - 1;
-            } else {
-                oldMethod(item);
-            }
+                    .findFirst()
+                    .ifPresent(strategy -> update(item, strategy));
         }
     }
 
-    private void oldMethod(Item item) {
-        if (item.quality > 0) {
-            if (!item.name.equals(SULFURAS)) {
-                item.quality = item.quality - 1;
-            }
-            
-        }
+    private void update(Item item, QualityUpdateStrategy strategy) {
+        int delta = strategy.getDelta(item);
+        item.quality = item.quality + delta;
         if (!item.name.equals(SULFURAS)) {
             item.sellIn = item.sellIn - 1;
         }
-        if (item.sellIn < 0) {
-            if (item.quality > 0) {
-                if (!item.name.equals(SULFURAS)) {
-                    item.quality = item.quality - 1;
-                }
-            }
-        }
     }
+
 }
