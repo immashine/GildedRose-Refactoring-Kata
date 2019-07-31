@@ -4,9 +4,7 @@ class AgedBrieDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
     public int getQualityDelta(Item item) {
-        return item.quality < 50 
-                ? 1
-                : 0;
+        return 1;
     }
 
     @Override

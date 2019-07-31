@@ -32,7 +32,9 @@ class GildedRose {
     }
 
     private void update(Item item, DailyItemUpdateStrategy strategy) {
-        item.quality = item.quality + strategy.getQualityDelta(item);
+        if (item.quality > 0 && item.quality < 50) {
+            item.quality = item.quality + strategy.getQualityDelta(item);
+        }
         item.sellIn = item.sellIn + strategy.getSellInDelta();
     }
 }

@@ -4,9 +4,6 @@ class BackstagePassesDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
     public int getQualityDelta(Item item) {
-        if (item.quality >= 50){
-            return 0;
-        }
         if (item.sellIn <= 0){
             return -item.quality;
         }
