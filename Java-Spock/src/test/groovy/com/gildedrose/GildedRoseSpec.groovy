@@ -17,7 +17,7 @@ class GildedRoseSpec extends Specification {
 
     def 'should decrease quality by 2 when sellIn is negative for common item'() {
         given: 'common item with negative sellIn'
-            Item[] items = [new Item('common item', -1, 28)]
+            Item[] items = [new Item('any item', -1, 28)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
@@ -28,13 +28,15 @@ class GildedRoseSpec extends Specification {
 
     def 'should not decrease quality below zero'() {
         given: 'common item with zero quality'
-            Item[] items = [new Item('common item', 4, 0)]
+            Item[] items = [new Item(name, 4, 0)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
         then: 'quality did not change'
             app.items[0].quality == 0
+        where:
+            name << ['common item', 'Conjured']
     }
 
     def 'should decrease sellIn by 1'() {
@@ -61,13 +63,15 @@ class GildedRoseSpec extends Specification {
 
     def 'should not increase quality above 50'() {
         given: 'Aged Brie with maximum allowed quality'
-            Item[] items = [new Item('Aged Brie', 25, 50)]
+            Item[] items = [new Item(name, 25, 50)]
         and: 'the application with this item'
             GildedRose app = new GildedRose(items)
         when: 'updating quality'
             app.updateQuality()
         then: 'quality did not change'
             app.items[0].quality == 50
+        where:
+            name << ['Aged Brie', 'Backstage passes to a TAFKAL80ETC concert']
     }
 
     def 'should not change quality for Sulfuras'() {
@@ -145,5 +149,16 @@ class GildedRoseSpec extends Specification {
             app.updateQuality()
         then: 'quality decreased by 2'
             app.items[0].quality == 30
+    }
+
+    def 'should decrease quality by 4 for conjured item if sellIn below 0'() {
+        given: 'Conjured item'
+            Item[] items = [new Item('Conjured', -5, 32)]
+        and: 'the application with this item'
+            GildedRose app = new GildedRose(items)
+        when: 'updating quality'
+            app.updateQuality()
+        then: 'quality decreased by 4'
+            app.items[0].quality == 28
     }
 }

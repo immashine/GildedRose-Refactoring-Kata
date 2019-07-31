@@ -1,10 +1,10 @@
 package com.gildedrose;
 
-class ConjuredDailyUpdateStrategy implements DailyItemUpdateStrategy {
+class ConjuredDailyUpdateStrategy extends DefaultDailyUpdateStrategy implements DailyItemUpdateStrategy {
 
     @Override
     public int getQualityDelta(Item item) {
-        return -2;
+        return super.getQualityDelta(item) * 2;
     }
 
     @Override
